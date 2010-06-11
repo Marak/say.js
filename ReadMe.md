@@ -1,6 +1,18 @@
-<h1>say.js - have nodejs talk to you</h1>
-<h2>voice</h2>
+# say.js - have nodejs talk to you
 
+## usage
+
+        var say = require('./say');
+        say.speak('sup dog?');
+        
+        // set a custom voice
+        say.voice('Princess');
+        say.speak('hello there!');
+
+
+### (optional) npm install say
+
+## voices
 ### girls
 - Agnes
 - Kathy

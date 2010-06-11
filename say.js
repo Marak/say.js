@@ -28,3 +28,22 @@ exports.speak = function(text){
     }
   });
 }
+
+
+/*
+// monkey punch sys.puts to speak, lol
+say.puts();
+
+sys.puts('whats, up dog?'); // did you hear that?
+exports.puts = function(){
+
+  var s2 = require('sys');
+
+  // don't try this at home
+  sys.puts = function(text){
+    s2.puts(text);
+  };
+
+}
+
+*/

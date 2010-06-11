@@ -9,10 +9,6 @@
         say.voice('Princess');
         say.speak('hello there!');
 
-
-# Node Package Manager Install (optional)
-        npm install say
-
 ## voices
 ### girls
 - Agnes

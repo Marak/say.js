@@ -1,8 +1,6 @@
-# say.js - have nodejs talk to you
-
 <img src = "http://i.imgur.com/Zi6jX.png" border = "0"/>
 
-## usage
+# usage
 
         var say = require('./say');
         say.speak('sup dog?');
@@ -12,7 +10,7 @@
         say.speak('hello there!');
 
 
-## Node Package Manager Install (optional)
+# Node Package Manager Install (optional)
         npm install say
 
 ## voices

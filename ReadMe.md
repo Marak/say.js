@@ -39,3 +39,8 @@
 - Trinoids
 - Whisper
 - Zarvox
+
+
+### Requirements
+
+Mac OS

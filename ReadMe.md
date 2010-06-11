@@ -10,7 +10,8 @@
         say.speak('hello there!');
 
 
-### (optional) npm install say
+## Node Package Manager Install (optional)
+        npm install say
 
 ## voices
 ### girls

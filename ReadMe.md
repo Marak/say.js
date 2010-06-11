@@ -40,6 +40,9 @@
 - Whisper
 - Zarvox
 
+### fun facts
+
+say.speak calls are asynchronous, lol ^_^
 
 ### Requirements
 

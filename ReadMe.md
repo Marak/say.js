@@ -1,5 +1,7 @@
 # say.js - have nodejs talk to you
 
+<img src = "http://i.imgur.com/Zi6jX.png" border = "0"/>
+
 ## usage
 
         var say = require('./say');

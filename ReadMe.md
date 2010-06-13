@@ -9,8 +9,6 @@
         say.voice('Princess');
         say.speak('hello there!');
 
-
-
         translate.output('English');
         translate.input('Spanish');
 

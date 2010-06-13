@@ -19,7 +19,7 @@ exports.voice = function(p){
 
 // say stuff, speak
 exports.speak = function(text){
-  var commands = [text, '-v', person];
+  var commands = [ '-v', person, text];
   var childD = spawn("say", commands);
   childD.stdout.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');  

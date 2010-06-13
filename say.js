@@ -5,20 +5,12 @@ var sys = require('sys')
   , spawn = require('child_process').spawn
   , child;
 
+var colors = require('./colors'); // import color.js for fun!
+
 var say = exports;
 
 // alex is the default person
 var person = 'Alex';
-
-// http client for accessing google api
-var googleTranslate = http.createClient(80, 'ajax.googleapis.com');
-
-// simple fn to get the path given text to translate
-var getEnglishTranslatePath = function (text) {
-  return ['/ajax/services/language/translate?v=1.0&q='
-            ,encodeURIComponent(text)
-            ,'&langpair=%7Cen'].join("");
-}
 
 // assign a voice to say
 exports.voice = function(p){
@@ -38,31 +30,6 @@ exports.speak = function(text){
       sys.puts('couldnt talk, had an error ' + '[code: '+ code + '] ' + '[signal: ' + signal + ']');
     }
   });
-}
-
-// say stuff you can understand
-exports.speakENGLISHmofo = function (text) {
-  var req = googleTranslate.request('GET', getEnglishTranslatePath(text),
-    {'host': 'ajax.googleapis.com', 'encoding':'utf-8'});
-    
-  req.addListener('response', function (response) {
-    var responseBody = "";
-    
-    response.addListener('data', function (chunk) {
-      responseBody += chunk;
-    });
-    
-    response.addListener('end', function () {
-      var bodyObj = JSON.parse(responseBody);
-      if (bodyObj.responseStatus === 200) {
-        exports.speak(bodyObj.responseData.translatedText);
-      } else {
-        sys.debug("Translate API call failed");
-      }
-    });
-  });
-  
-  req.end();
 }
 
 /*

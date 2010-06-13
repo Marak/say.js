@@ -9,8 +9,6 @@
         say.voice('Princess');
         say.speak('hello there!');
 
-
-        var say = require('./say');
         var translate = require('./translate');
 
         translate.output('English');

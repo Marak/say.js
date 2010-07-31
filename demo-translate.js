@@ -1,9 +1,16 @@
-var say = require('./say');
-var translate = require('./translate');
+/* 
+  check out the translate.js project for more information
+  http://github.com/marak/translate.js/
 
-translate.output('English');
-translate.input('Spanish');
+  requires installing the translate.js module via
+  
+  sudo npm install translate
+
+*/
+
+var say = require('say');
+var translate = require('translate');
 
 translate.text('Yo quero tacos por favor', function(result){
-  say.speak(result);
-})
+  say.speak('Alex', result);
+});

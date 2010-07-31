@@ -2,19 +2,20 @@
 
 # usage
 
-        var say = require('./say');
-        say.speak('sup dog?');
-        
-        // set a custom voice
-        say.voice('Princess');
-        say.speak('hello there!');
+      var say = require('say'),
+      colors = require('colors'),
+      sys = require('sys');
 
-        translate.output('English');
-        translate.input('Spanish');
+      // no callback, fire and forget
+      say.speak('Alex', 'whats up, dog?');
 
-        translate.text('Yo quero tacos por favor', function(result){
-          say.speak(result);
-        })
+      // no callback, fire and forget
+      say.speak('Cellos', 'whats up, dog?');
+
+      // output some text to the console as the callback
+      say.speak('Good News', 'whats up, dog?', function () {
+        sys.puts('text to speech complete'.green);
+      });
 
 
 

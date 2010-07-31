@@ -1,12 +1,14 @@
-var say = require('./say');
+var say = require('say'),
+colors = require('colors'),
+sys = require('sys');
 
-say.voice('Alex');
-say.speak('whats up, dog?');
+// no callback, fire and forget
+say.speak('Alex', 'whats up, dog?');
 
-say.voice('Cellos');
-say.speak('whats up, dog?');
+// no callback, fire and forget
+say.speak('Cellos', 'whats up, dog?');
 
-say.voice('Good News');
-say.speak('whats up, dog?');
-
-// lol say.speak() calls are async ^_^ ahahaha, have fun
+// output some text to the console as the callback
+say.speak('Good News', 'whats up, dog?', function () {
+  sys.puts('text to speech complete'.green);
+});

@@ -1,5 +1,14 @@
 <img src = "http://i.imgur.com/Zi6jX.png" border = "0"/>
 
+### Installing npm (node package manager)
+
+     curl http://npmjs.org/install.sh | sh
+
+### Installing say.js
+
+     npm install say
+
+
 # usage
 
       var say = require('say'),
@@ -16,6 +25,15 @@
       say.speak('Good News', 'whats up, dog?', function () {
         sys.puts('text to speech complete'.green);
       });
+
+
+      // try using translate.js with say.js
+      var translate = require('translate');
+
+      translate.text('Yo quero tacos por favor', function(result){
+        say.speak('Alex', result);
+      });
+
 
 
 

@@ -8,7 +8,7 @@
 
 */
 
-var say = require('say');
+var say = require('../lib/say');
 var translate = require('translate');
 
 translate.text('Yo quero tacos por favor', function(result){

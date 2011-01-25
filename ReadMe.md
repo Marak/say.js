@@ -1,4 +1,4 @@
-<img src = "http://i.imgur.com/Zi6jX.png" border = "0"/>
+<img src = "https://github.com/Marak/node_mailer/raw/master/logo.png"/>
 
 ### Installing npm (node package manager)
 

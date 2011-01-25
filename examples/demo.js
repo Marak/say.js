@@ -1,4 +1,4 @@
-var say = require('say'),
+var say = require('../lib/say'),
 colors = require('colors'),
 sys = require('sys');
 

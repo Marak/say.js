@@ -9,7 +9,7 @@
      npm install say
 
 
-# usage
+# usage - Mac OS voices
 
       var say = require('say'),
       colors = require('colors'),
@@ -35,7 +35,11 @@
       });
 
 
+# Usage - Linux
 
+Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for 
+Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`, 
+and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.  
 
 ## voices
 ### girls

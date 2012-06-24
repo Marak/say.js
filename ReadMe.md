@@ -13,7 +13,7 @@
 
       var say = require('say'),
       colors = require('colors'),
-      sys = require('sys');
+      util = require('util');
 
       // no callback, fire and forget
       say.speak('Alex', 'whats up, dog?');
@@ -23,7 +23,7 @@
 
       // output some text to the console as the callback
       say.speak('Good News', 'whats up, dog?', function () {
-        sys.puts('text to speech complete'.green);
+        util.puts('text to speech complete'.green);
       });
 
 

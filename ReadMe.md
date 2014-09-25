@@ -1,41 +1,38 @@
 <img src = "https://github.com/Marak/say.js/raw/master/logo.png"/>
 
-### Installing npm (node package manager)
-
-     curl http://npmjs.org/install.sh | sh
-
 ### Installing say.js
 
-     npm install say
-
+```bash
+npm install say
+```
 
 # usage - Mac OS voices
 
-      var say = require('say'),
-      colors = require('colors'),
-      util = require('util');
+```javascript
+var say = require('say'),
 
-      // no callback, fire and forget
-      say.speak('Alex', 'whats up, dog?');
+// no callback, fire and forget
+say.speak('Alex', 'whats up, dog?');
 
-      // use default voice in System Preferences
-      say.speak(null, 'Hello!');
+// use default voice in System Preferences
+say.speak(null, 'Hello!');
 
-      // no callback, fire and forget
-      say.speak('Cellos', 'whats up, dog?');
+// no callback, fire and forget
+say.speak('Cellos', 'whats up, dog?');
 
-      // output some text to the console as the callback
-      say.speak('Good News', 'whats up, dog?', function () {
-        util.puts('text to speech complete'.green);
-      });
+// output some text to the console as the callback
+say.speak('Good News', 'whats up, dog?', function () {
+     console.log('text to speech complete');
+});
 
 
-      // try using translate.js with say.js
-      var translate = require('translate');
+// try using translate.js with say.js
+var translate = require('translate');
 
-      translate.text('Yo quero tacos por favor', function(result){
-        say.speak('Alex', result);
-      });
+translate.text('Yo quero tacos por favor', function(result){
+     say.speak('Alex', result);
+});
+```
 
 
 # Usage - Linux
@@ -77,7 +74,7 @@ and pressing `TAB`.  Then take the name of the voice you'd like to try, minus th
 
 ### fun facts
 
-say.speak calls are asynchronous, lol ^_^
+`say.speak()` calls are asynchronous, lol ^_^
 
 ## translation provided by <a href = "http://github.com/marak/translate.js">translate.js</a>
 
@@ -87,6 +84,4 @@ say.speak calls are asynchronous, lol ^_^
 
 ### Requirements
 
-Mac OS
-
-
+Mac OS (comes with say) or Linux with Festival

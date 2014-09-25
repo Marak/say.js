@@ -18,6 +18,9 @@
       // no callback, fire and forget
       say.speak('Alex', 'whats up, dog?');
 
+      // use default voice in System Preferences
+      say.speak(null, 'Hello!');
+
       // no callback, fire and forget
       say.speak('Cellos', 'whats up, dog?');
 
@@ -37,9 +40,9 @@
 
 # Usage - Linux
 
-Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for 
-Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`, 
-and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.  
+Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for
+Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`,
+and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
 
 ## voices
 ### girls
@@ -63,7 +66,7 @@ and pressing `TAB`.  Then take the name of the voice you'd like to try, minus th
 - Bells
 - Boing
 - Bubbles
-- Cellos 
+- Cellos
 - Deranged
 - Good News
 - Hysterical
@@ -86,4 +89,4 @@ say.speak calls are asynchronous, lol ^_^
 
 Mac OS
 
-          
+

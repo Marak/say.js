@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var say = require('../');
 
 // no callback, fire and forget

@@ -7,10 +7,6 @@
         "type": "git",
         "url": "http://github.com/Marak/say.js.git"
     },
-    "dependencies": {
-       "translate": ">= 0.3.3",
-       "colors": "0.5.x"
-     },
     "engine": [
         "node >=0.1.90"
     ],

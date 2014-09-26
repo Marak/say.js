@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var say = require('../');
 
 // no callback, fire and forget

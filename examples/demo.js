@@ -1,4 +1,4 @@
-var say = require('../lib/say');
+var say = require('../');
 
 // no callback, fire and forget
 say.speak('Alex', 'whats up, dog?');

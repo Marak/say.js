@@ -12,6 +12,7 @@ npm install say
 var say = require('say'),
 
 // no callback, fire and forget
+// note it has no error handling
 say.speak('Alex', 'whats up, dog?');
 
 // use default voice in System Preferences
@@ -21,8 +22,12 @@ say.speak(null, 'Hello!');
 say.speak('Cellos', 'whats up, dog?');
 
 // output some text to the console as the callback
-say.speak('Good News', 'whats up, dog?', function () {
-     console.log('text to speech complete');
+say.speak('Good News', 'whats up, dog?', function (error) {
+    if (error) {
+        console.log(error);
+    }
+
+    console.log('text to speech complete');
 });
 
 
@@ -30,10 +35,9 @@ say.speak('Good News', 'whats up, dog?', function () {
 var translate = require('translate');
 
 translate.text('Yo quero tacos por favor', function(result){
-     say.speak('Alex', result);
+    say.speak('Alex', result);
 });
 ```
-
 
 # Usage - Linux
 
@@ -84,4 +88,4 @@ and pressing `TAB`.  Then take the name of the voice you'd like to try, minus th
 
 ### Requirements
 
-Mac OS (comes with say) or Linux with Festival
+Mac OS (comes with `say`) or Linux with Festival

@@ -9,7 +9,7 @@ npm install say
 # usage - Mac OS voices
 
 ```javascript
-var say = require('say'),
+var say = require('say');
 
 // no callback, fire and forget
 say.speak('Alex', 'whats up, dog?');

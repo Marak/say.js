@@ -25,6 +25,9 @@ say.speak('Good News', 'whats up, dog?', function () {
      console.log('text to speech complete');
 });
 
+// applying speak speed
+say.speak('Ralph', 'Awesome', undefined, 600);
+
 
 // try using translate.js with say.js
 var translate = require('translate');

@@ -13,7 +13,7 @@ else if (process.platform === 'linux') {
 }
 
 // say stuff, speak
-exports.speak = function(voice, text, callback) {
+exports.speak = function(voice, text, callback, speed) {
   var commands,
     pipedData;
 
@@ -27,6 +27,9 @@ exports.speak = function(voice, text, callback) {
       commands = [ text ];
     } else {
       commands = [ '-v', voice, text];
+    }
+    if (speed) {
+      commands.push('-r', speed);
     }
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
@@ -53,11 +56,14 @@ exports.speak = function(voice, text, callback) {
       console.log('couldnt talk, had an error ' + '[code: '+ code + '] ' + '[signal: ' + signal + ']');
     }
 
-    // we could do better than a try / catch here
-    try {
-      callback();
-    } catch(err) {
-      // noop
+    // handle callback if given
+    if (callback) {
+      // we could do better than a try / catch here
+      try {
+        callback();
+      } catch(err) {
+        // noop
+      }
     }
   });
 };

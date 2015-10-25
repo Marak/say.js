@@ -11,11 +11,15 @@ if (process.platform === 'darwin') {
 else if (process.platform === 'linux') {
   say.speaker = 'festival';
 }
+else if (process.platform === 'win32') {
+  say.speaker = 'cmd';
+}
 
 // say stuff, speak
 exports.speak = function(voice, text, callback) {
   var commands,
-    pipedData;
+    pipedData,
+    childD;
 
   if (arguments.length < 2) {
     console.log('invalid amount of arguments sent to speak()');
@@ -31,10 +35,15 @@ exports.speak = function(voice, text, callback) {
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
     pipedData = '(' + voice + ') (SayText \"' + text + '\")';
+  } else if (process.platform === 'win32') {
+    commands = [ '/s /c "'+path.join(__dirname, 'say.vbs')+' '+JSON.stringify (text)+'"' ];
   }
 
-
-  var childD = spawn(say.speaker, commands);
+  if (process.platform === 'win32') {
+    childD = spawn(say.speaker, commands, { windowsVerbatimArguments:true });
+  } else {
+    childD = spawn(say.speaker, commands);
+  }
 
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');

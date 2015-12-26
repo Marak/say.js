@@ -1,4 +1,4 @@
-// This is a modified version of say.js by Marak Squires http://github.com/marak/say.js/
+/* This is a modified version of say.js by Marak Squires http://github.com/marak/say.js/ */
 
 /*
 Copyright (c) 2010 Marak Squires http://github.com/marak/say.js/

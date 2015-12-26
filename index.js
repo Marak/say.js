@@ -19,7 +19,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-//'use strict';
+// 'use strict';
 var spawn = require('child_process').spawn;
 var speechProcess;
 var say = exports;
@@ -62,12 +62,12 @@ exports.speak = function(voice, text, callback, speed) {
 
 
   if (process.platform === 'linux') {
-    childD.stdin.end(pipedData);
+    speechProcess.stdin.end(pipedData);
   }
 
 
-  childD.stderr.on('data', function(data){ console.log(data); });
-  childD.stdout.on('data', function(data){ console.log(data); });
+  speechProcess.stderr.on('data', function(data){ console.log(data); });
+  speechProcess.stdout.on('data', function(data){ console.log(data); });
 
 
  speechProcess.addListener('exit', function (code, signal) {
@@ -75,7 +75,16 @@ exports.speak = function(voice, text, callback, speed) {
       console.log('couldnt talk, had an error ' + '[code: '+ code + '] ' + '[signal: ' + signal + ']');
     }
 
-    if ( callback ){ callback() }
+    if ( callback ){
+        try {
+        callback();
+      } catch(err) {
+        // noop
+      }
+
+    }
+
+
   });
 }
 

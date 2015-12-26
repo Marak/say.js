@@ -13,7 +13,7 @@ else if (process.platform === 'linux') {
 }
 
 // say stuff, speak
-exports.speak = function(voice, text, callback) {
+exports.speak = function(voice, text, callback, speed) {
   var commands,
     pipedData;
 
@@ -27,6 +27,9 @@ exports.speak = function(voice, text, callback) {
       commands = [ text ];
     } else {
       commands = [ '-v', voice, text];
+    }
+    if (speed) {
+      commands.push('-r', speed);
     }
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
@@ -53,27 +56,26 @@ exports.speak = function(voice, text, callback) {
       console.log('couldnt talk, had an error ' + '[code: '+ code + '] ' + '[signal: ' + signal + ']');
     }
 
-    // we could do better than a try / catch here
-    try {
-      callback();
-    } catch(err) {
-      // noop
+    ////STOP TEST
+     child = null;
+    //
+    // handle callback if given
+    if (callback) {
+      // we could do better than a try / catch here
+      try {
+        callback();
+      } catch(err) {
+        // noop
+      }
     }
   });
 };
 
-/*
-    This code doesnt work....but it could!
-    // monkey punch sys.puts to speak, lol
-    say.puts();
-
-    sys.puts('whats, up dog?'); // did you hear that?
-    exports.puts = function(){
-
-      var s2 = require('util');
-      // don't try this at home
-      sys.puts = function(text){
-        s2.puts(text);
-      };
-    }
-*/
+//STOP TEST
+exports.stop = function () {
+  if (!child) {
+    return;
+  }
+  child.stdin.pause();
+  child.kill();
+}

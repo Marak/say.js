@@ -35,6 +35,10 @@ translate.text('Yo quero tacos por favor', function(result){
 ```
 
 
+# Usage - Windows
+Voice selection is not available yet. The first argument to `speak` will be totally ignored and text will be spoken with the system's default voice.
+
+
 # Usage - Linux
 
 Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for

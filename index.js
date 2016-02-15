@@ -2,6 +2,7 @@
 
 var spawn = require('child_process').spawn;
 var say = exports;
+var childD;
 
 // use the correct library per platform
 if (process.platform === 'darwin') {
@@ -52,7 +53,7 @@ say.speak = function(voice, text, callback) {
   }
 
   var options = (process.platform === 'win32') ? { windowsVerbatimArguments: true } : undefined;
-  var childD = spawn(say.speaker, commands, options);
+  childD = spawn(say.speaker, commands, options);
 
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');
@@ -71,6 +72,34 @@ say.speak = function(voice, text, callback) {
       return callback(new Error('say.js: could not talk, had an error [code: ' + code + '] [signal: ' + signal + ']'));
     }
 
+    childD = null;
+
     callback(null);
   });
+};
+
+// TODO: If two messages are being spoken simultaneously, childD points to new instance, no way to kill previous.
+exports.stop = function(callback) {
+  if (typeof callback !== 'function') {
+    callback = function() {};
+  }
+
+  if (!childD) {
+    return callback(new Error('No speech to kill'));
+  }
+
+  if (process.platform === 'linux') {
+    // TODO: Need to ensure the following is true for all users, not just me. Danger Zone!
+    // On my machine, original childD.pid process is completely gone. Instead there is now a
+    // childD.pid + 1 sh process. Kill it and nothing happens. There's also a childD.pid + 2
+    // aplay process. Kill that and the audio actually stops.
+    process.kill(childD.pid + 2);
+  } else {
+    childD.stdin.pause();
+    childD.kill('SIGINT');
+  }
+
+  childD = null;
+
+  callback(null);
 };

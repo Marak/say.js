@@ -11,6 +11,10 @@ say.speak('Alex', 'whats up, dog?');
 say.speak('Cellos', 'whats up, dog?');
 
 // output some text to the console as the callback
-say.speak('Good News', 'whats up, dog?', function () {
+say.speak('Good News', 'whats up, dog?', function (error) {
+  if (error) {
+    console.log(error);
+  }
+
   console.log('text to speech complete');
 });

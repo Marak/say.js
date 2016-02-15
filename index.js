@@ -1,27 +1,32 @@
 'use strict';
 
-var spawn = require('child_process').spawn,
-  child;
-
+var spawn = require('child_process').spawn;
 var say = exports;
 
+// use the correct library per platform
 if (process.platform === 'darwin') {
   say.speaker = 'say';
-}
-else if (process.platform === 'linux') {
+} else if (process.platform === 'linux') {
   say.speaker = 'festival';
 }
 
-// say stuff, speak
-exports.speak = function(voice, text, callback) {
-  var commands,
-    pipedData;
+/**
+ * Uses system libraries to speak text via the speakers.
+ * @param  {string|null}   voice    The specified voice to use when speaking.
+ * @param  {string}   text     [description]
+ * @param  {Function} callback A callback of type function(err) to return.
+ *                             Err will be null if there is not an error; if
+ *                             there is an error, it will be of type Error.
+ */
+say.speak = function(voice, text, callback) {
+  var commands, pipedData;
 
   if (arguments.length < 2) {
-    console.log('invalid amount of arguments sent to speak()');
-    return;
+    // throw TypeError because API was used incorrectly
+    throw new TypeError('invalid amount of arguments sent to say.js speak');
   }
 
+  // tailor command arguments to specific platforms
   if (process.platform === 'darwin') {
     if (!voice) {
       commands = [ text ];
@@ -31,8 +36,12 @@ exports.speak = function(voice, text, callback) {
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
     pipedData = '(' + voice + ') (SayText \"' + text + '\")';
+  } else {
+    // if we don't support the platform, callback with an error (next tick) - don't continue
+    return process.nextTick(function() {
+      callback(new Error('say.js speak does not support platform ' + process.platform));
+    });
   }
-
 
   var childD = spawn(say.speaker, commands);
 
@@ -43,21 +52,20 @@ exports.speak = function(voice, text, callback) {
     childD.stdin.end(pipedData);
   }
 
-
-  childD.stderr.on('data', function(data){ console.log(data); });
-  childD.stdout.on('data', function(data){ console.log(data); });
-
+  childD.stderr.on('data', function(data) {
+    // we can't stop execution from this function
+    callback(new Error(data));
+  });
 
   childD.addListener('exit', function (code, signal) {
     if (code === null || signal !== null) {
-      console.log('couldnt talk, had an error ' + '[code: '+ code + '] ' + '[signal: ' + signal + ']');
+      return callback(new Error('say.js: could not talk, had an error [code: ' + code + '] [signal: ' + signal + ']'));
     }
 
-    // we could do better than a try / catch here
-    try {
-      callback();
-    } catch(err) {
-      // noop
+    // when we handle Errors, we simply have to assume the callback is existential
+    // for this, we cannot assume and must check for a function
+    if (typeof callback === 'function') {
+      callback(null);
     }
   });
 };

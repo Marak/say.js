@@ -15,22 +15,22 @@ if (process.platform === 'darwin') {
 
 /**
  * Uses system libraries to speak text via the speakers.
- * @param  {string|null}   voice    The specified voice to use when speaking.
- * @param  {string}   text     [description]
- * @param  {Function} callback A callback of type function(err) to return.
- *                             Err will be null if there is not an error; if
- *                             there is an error, it will be of type Error.
+ *
+ * @param {string} text Text to be spoken
+ * @param {string|null} voice Name of voice to be spoken with
+ * @param {number|null} speed Speed of text (On OSX this is Word per Minute, Linux is percent of normal e.g. 100)
+ * @param {Function|null} callback A callback of type function(err) to return.
  */
-say.speak = function(voice, text, callback) {
+say.speak = function(text, voice, speed, callback) {
   var commands, pipedData;
 
   if (typeof callback !== 'function') {
     callback = function() {};
   }
 
-  if (arguments.length < 2) {
+  if (!text) {
     // throw TypeError because API was used incorrectly
-    throw new TypeError('invalid amount of arguments sent to say.js speak');
+    throw new TypeError('Must provide text parameter');
   }
 
   // tailor command arguments to specific platforms
@@ -40,11 +40,24 @@ say.speak = function(voice, text, callback) {
     } else {
       commands = [ '-v', voice, text];
     }
+
+    if (speed) {
+      commands.push('-r', speed);
+    }
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
-    pipedData = '(' + voice + ') (SayText \"' + text + '\")';
+
+    if (speed) {
+      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + speed + '/100)) $FILE") ';
+    }
+
+    if (voice) {
+      pipedData += '(' + voice + ') ';
+    }
+
+    pipedData += '(SayText \"' + text + '\")';
   } else if (process.platform === 'win32') {
-    commands = [ '/s /c "'+path.join(__dirname, 'say.vbs')+' '+JSON.stringify (text)+'"' ];
+    commands = [ '/s /c "' + path.join(__dirname, 'say.vbs') + ' ' + JSON.stringify(text) + '"' ];
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {
@@ -58,7 +71,7 @@ say.speak = function(voice, text, callback) {
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');
 
-  if (process.platform === 'linux') {
+  if (pipedData) {
     childD.stdin.end(pipedData);
   }
 
@@ -78,7 +91,11 @@ say.speak = function(voice, text, callback) {
   });
 };
 
-// TODO: If two messages are being spoken simultaneously, childD points to new instance, no way to kill previous.
+/**
+ * Stops currently playing audio. There will be unexpected results if multiple audios are being played at once
+ *
+ * TODO: If two messages are being spoken simultaneously, childD points to new instance, no way to kill previous
+ */
 exports.stop = function(callback) {
   if (typeof callback !== 'function') {
     callback = function() {};

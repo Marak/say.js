@@ -4,8 +4,12 @@
 
 var say = require('../');
 
+var text = 'This is Ground Control to Major Tom This is Ground Control to Major Tom This is Ground Control to Major Tom';
+var voice = undefined;
+var speed = 120;
+
 // output some text to the console as the callback
-say.speak(null, 'This is Ground Control to Major Tom This is Ground Control to Major Tom This is Ground Control to Major Tom', function (error) {
+say.speak(text, voice, speed, function(error) {
   if (error) {
     // This fires when say.stop fires. Not sure if that's a good or bad thing...
     return console.error('Error speaking!', error);

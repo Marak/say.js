@@ -1,4 +1,4 @@
-<img src = "https://github.com/Marak/say.js/raw/master/logo.png"/>
+<img src="https://github.com/Marak/say.js/raw/master/logo.png" />
 
 ### Installing say.js
 
@@ -6,42 +6,33 @@
 npm install say
 ```
 
-# usage - Mac OS voices
+# Usage - Mac OS voices
+
+Speed is based on the average number of words to be spoken per minute.
 
 ```javascript
 var say = require('say');
 
-// no callback, fire and forget
-// note it has no error handling
-say.speak('Alex', 'whats up, dog?');
-
 // use default voice in System Preferences
-say.speak(null, 'Hello!');
+say.speak('Hello!');
 
 // no callback, fire and forget
-say.speak('Cellos', 'whats up, dog?');
+say.speak('whats up, dog?', 'Alex', 20);
 
 // output some text to the console as the callback
-say.speak('Good News', 'whats up, dog?', function (error) {
-    if (error) {
-        console.log(error);
-    }
+say.speak('whats up, dog?', 'Good News', undefined, function(error) {
+  if (error) {
+    return console.log(error);
+  }
 
-    console.log('text to speech complete');
-});
-
-
-// try using translate.js with say.js
-var translate = require('translate');
-
-translate.text('Yo quero tacos por favor', function(result){
-    say.speak('Alex', result);
+  console.log('text to speech complete');
 });
 ```
 
 # Usage - Windows
-Voice selection is not available yet. The first argument to `speak` will be totally ignored and text will be spoken with the system's default voice.
 
+Voice parameter is not yet available. Used whatever default system voice is set, ignoring voice parameter.
+Speed parameter is not yet available.
 
 # Usage - Linux
 
@@ -49,21 +40,26 @@ Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/f
 Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`,
 and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
 
+Speed is a percent based upon the normal rate, so 50 is 50%, 120 is 120%, etc.
+
 Try the following commad to install Festival as well as a default voice:
 
 ```shell
 sudo apt-get install festival festvox-kallpc16k
 ```
 
-## voices
-### girls
+## Available Voices on OS X
+
+### Women
+
 - Agnes
 - Kathy
 - Princess
 - Vicki
 - Victoria
 
-### guys
+### Men
+
 - Albert
 - Alex
 - Bruce
@@ -71,7 +67,8 @@ sudo apt-get install festival festvox-kallpc16k
 - Junior
 - Ralph
 
-### others
+### Others
+
 - Bad News
 - Bahh
 - Bells
@@ -88,4 +85,6 @@ sudo apt-get install festival festvox-kallpc16k
 
 ### Requirements
 
-Mac OS (comes with `say`) or Linux with Festival
+* Mac OS (comes with `say`)
+* Linux with Festival installed
+* Windows (comes with SAPI.SpVoice)

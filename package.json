@@ -1,13 +1,14 @@
 {
   "name": "say",
-  "description": "TTS (text to speech) for node.js. send text from node.js to your speakers.",
+  "description": "TTS (Text To Speech) Module for Node.js",
   "version": "0.7.0",
   "author": "Marak Squires",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/Marak/say.js.git"
   },
-  "engine": [
-    "node >=0.1.90"
-  ]
+  "engines": {
+    "node": ">=0.10.0"
+  }
 }

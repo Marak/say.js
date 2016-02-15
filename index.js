@@ -21,6 +21,10 @@ if (process.platform === 'darwin') {
 say.speak = function(voice, text, callback) {
   var commands, pipedData;
 
+  if (typeof callback !== 'function') {
+    callback = function() {};
+  }
+
   if (arguments.length < 2) {
     // throw TypeError because API was used incorrectly
     throw new TypeError('invalid amount of arguments sent to say.js speak');
@@ -64,9 +68,7 @@ say.speak = function(voice, text, callback) {
 
     // when we handle Errors, we simply have to assume the callback is existential
     // for this, we cannot assume and must check for a function
-    if (typeof callback === 'function') {
-      callback(null);
-    }
+    callback(null);
   });
 };
 

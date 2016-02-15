@@ -45,6 +45,12 @@ Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/f
 Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`,
 and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
 
+Try the following commad to install Festival as well as a default voice:
+
+```shell
+sudo apt-get install festival festvox-kallpc16k
+```
+
 ## voices
 ### girls
 - Agnes

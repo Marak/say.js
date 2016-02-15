@@ -8,6 +8,8 @@ if (process.platform === 'darwin') {
   say.speaker = 'say';
 } else if (process.platform === 'linux') {
   say.speaker = 'festival';
+} else if (process.platform === 'win32') {
+  say.speaker = 'cmd';
 }
 
 /**
@@ -40,6 +42,8 @@ say.speak = function(voice, text, callback) {
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
     pipedData = '(' + voice + ') (SayText \"' + text + '\")';
+  } else if (process.platform === 'win32') {
+    commands = [ '/s /c "'+path.join(__dirname, 'say.vbs')+' '+JSON.stringify (text)+'"' ];
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {
@@ -47,7 +51,8 @@ say.speak = function(voice, text, callback) {
     });
   }
 
-  var childD = spawn(say.speaker, commands);
+  var options = (process.platform === 'win32') ? { windowsVerbatimArguments: true } : undefined;
+  var childD = spawn(say.speaker, commands, options);
 
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');

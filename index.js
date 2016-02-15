@@ -52,7 +52,7 @@ say.speak = function(voice, text, callback) {
     childD.stdin.end(pipedData);
   }
 
-  childD.stderr.on('data', function(data) {
+  childD.stderr.once('data', function(data) {
     // we can't stop execution from this function
     callback(new Error(data));
   });

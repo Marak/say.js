@@ -91,7 +91,7 @@ say.speak = function(text, voice, speed, callback) {
   });
 };
 
-say.export = function(text, output, params, callback) {
+say.export = function(text, voice, speed, filename, callback) {
   var commands, pipedData;
 
   if (!text) {
@@ -99,16 +99,9 @@ say.export = function(text, output, params, callback) {
     throw new TypeError('Must provide text parameter');
   }
 
-  if (!output || typeof output !== 'string') {
+  if (!filename) {
     // throw TypeError because API was used incorrectly
-    throw new TypeError('Must provide output parameter');
-  }
-
-  if (typeof params !== 'object'){
-    params = {voice: 'Alex', speed: 175};
-  } else {
-    params.voice = params.voice || 'Alex';
-    params.speed = params.speed || 175;
+    throw new TypeError('Must provide a filename');
   }
 
   if (typeof callback !== 'function') {
@@ -117,10 +110,20 @@ say.export = function(text, output, params, callback) {
 
   // tailor command arguments to specific platforms
   if (process.platform === 'darwin') {
-    commands = ['-v', params.voice, text];
 
-    commands.push('-r', params.speed, '-o', output, '--data-format=LEF32@32000');
+    if (!voice) {
+      commands = [ text ];
+    } else {
+      commands = [ '-v', voice, text];
+    }
 
+    if (speed) {
+      commands.push('-r', speed);
+    }
+
+    if (filename){
+        commands.push('-o', filename, '--data-format=LEF32@32000');
+    }
   }  else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {

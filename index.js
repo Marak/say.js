@@ -91,6 +91,72 @@ say.speak = function(text, voice, speed, callback) {
   });
 };
 
+say.export = function(text, voice, speed, filename, callback) {
+  var commands, pipedData;
+
+  if (!text) {
+    // throw TypeError because API was used incorrectly
+    throw new TypeError('Must provide text parameter');
+  }
+
+  if (!filename) {
+    // throw TypeError because API was used incorrectly
+    throw new TypeError('Must provide a filename');
+  }
+
+  if (typeof callback !== 'function') {
+    callback = function() {};
+  }
+
+  // tailor command arguments to specific platforms
+  if (process.platform === 'darwin') {
+
+    if (!voice) {
+      commands = [ text ];
+    } else {
+      commands = [ '-v', voice, text];
+    }
+
+    if (speed) {
+      commands.push('-r', speed);
+    }
+
+    if (filename){
+        commands.push('-o', filename, '--data-format=LEF32@32000');
+    }
+  }  else {
+    // if we don't support the platform, callback with an error (next tick) - don't continue
+    return process.nextTick(function() {
+      callback(new Error('say.js export does not support platform ' + process.platform));
+    });
+  }
+
+  childD = spawn(say.speaker, commands);
+
+  childD.stdin.setEncoding('ascii');
+  childD.stderr.setEncoding('ascii');
+
+  if (pipedData) {
+    childD.stdin.end(pipedData);
+  }
+
+  childD.stderr.once('data', function(data) {
+    // we can't stop execution from this function
+    callback(new Error(data));
+  });
+
+  childD.addListener('exit', function (code, signal) {
+    if (code === null || signal !== null) {
+      return callback(new Error('say.js: could not talk, had an error [code: ' + code + '] [signal: ' + signal + ']'));
+    }
+
+    childD = null;
+
+    callback(null);
+  });
+};
+
+
 /**
  * Stops currently playing audio. There will be unexpected results if multiple audios are being played at once
  *

@@ -20,10 +20,10 @@ say.speak('Hello!');
 say.stop();
 
 // More complex example (with an OS X voice) and slow speed
-say.speak('whats up, dog?', 'Alex', 20);
+say.speak('whats up, dog?', 'Alex', 0.5);
 
 // Fire a callback once the text has completed being spoken
-say.speak('whats up, dog?', 'Good News', null, function(err) {
+say.speak('whats up, dog?', 'Good News', 1.0, function(err) {
   if (err) {
     return console.error(err);
   }
@@ -32,7 +32,7 @@ say.speak('whats up, dog?', 'Good News', null, function(err) {
 });
 
 // Export spoken audio to a WAV file
-say.export("I'm sorry, Dave.", 'Cellos', 150, 'hal.wav', function(err) {
+say.export("I'm sorry, Dave.", 'Cellos', 0.75, 'hal.wav', function(err) {
   if (err) {
     return console.error(err);
   }
@@ -43,8 +43,6 @@ say.export("I'm sorry, Dave.", 'Cellos', 150, 'hal.wav', function(err) {
 
 
 ## OS X Notes
-
-Speed is based on the average number of words spoken per minute. The OS X `say` command seems to default to 175.
 
 ### Feminine Voices
 
@@ -72,8 +70,6 @@ The `export` method is not available.
 Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for
 Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`,
 and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
-
-Speed is a percent based upon the normal rate, so 50 is 50%, 120 is 120%, etc. This differs from OS X.
 
 The `export` method is not yet available.
 

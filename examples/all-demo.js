@@ -6,7 +6,7 @@ var say = require('../');
 
 var text = 'This is Ground Control to Major Tom This is Ground Control to Major Tom This is Ground Control to Major Tom';
 var voice = undefined;
-var speed = 120;
+var speed = 2.0;
 
 // output some text to the console as the callback
 say.speak(text, voice, speed, function(error) {

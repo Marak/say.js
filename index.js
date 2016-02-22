@@ -7,8 +7,10 @@ var childD;
 // use the correct library per platform
 if (process.platform === 'darwin') {
   say.speaker = 'say';
+  say.base_speed = 175;
 } else if (process.platform === 'linux') {
   say.speaker = 'festival';
+  say.base_speed = 100;
 } else if (process.platform === 'win32') {
   say.speaker = 'cmd';
 }
@@ -18,7 +20,7 @@ if (process.platform === 'darwin') {
  *
  * @param {string} text Text to be spoken
  * @param {string|null} voice Name of voice to be spoken with
- * @param {number|null} speed Speed of text (On OSX this is Word per Minute, Linux is percent of normal e.g. 100)
+ * @param {number|null} speed Speed of text (e.g. 1.0 for normal, 0.5 half, 2.0 double)
  * @param {Function|null} callback A callback of type function(err) to return.
  */
 say.speak = function(text, voice, speed, callback) {
@@ -42,13 +44,13 @@ say.speak = function(text, voice, speed, callback) {
     }
 
     if (speed) {
-      commands.push('-r', speed);
+      commands.push('-r', convertSpeed(speed));
     }
   } else if (process.platform === 'linux') {
     commands = ['--pipe'];
 
     if (speed) {
-      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + speed + '/100)) $FILE") ';
+      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + convertSpeed(speed) + '/100)) $FILE") ';
     }
 
     if (voice) {
@@ -118,7 +120,7 @@ say.export = function(text, voice, speed, filename, callback) {
     }
 
     if (speed) {
-      commands.push('-r', speed);
+      commands.push('-r', convertSpeed(speed));
     }
 
     if (filename){
@@ -186,3 +188,7 @@ exports.stop = function(callback) {
 
   callback(null);
 };
+
+function convertSpeed(speed) {
+  return Math.ceil(say.base_speed * speed);
+}

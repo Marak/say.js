@@ -181,6 +181,13 @@ exports.stop = function(callback) {
     // aplay process. Kill that and the audio actually stops.
     process.kill(childD.pid + 2);
   } else {
+    if (process.platform === 'win32') {
+      // Temporary solution to kill wscript process - currently only kills the cmd process
+      // so audio continues playing even after calling stop(). Spawns new terminal to
+      // perform taskkill as childD is still locked in WaitUntilDone
+      var killVBS = spawn('cmd', []);
+      killVBS.stdin.write("taskkill /f /im wscript.exe\n");
+    }
     childD.stdin.pause();
     childD.kill('SIGINT');
   }

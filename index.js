@@ -1,6 +1,6 @@
 'use strict';
 
-var spawn = require('child_process').spawn;
+var child_process = require('child_process');
 var path = require('path');
 var say = exports;
 var childD;
@@ -69,7 +69,7 @@ say.speak = function(text, voice, speed, callback) {
   }
 
   var options = (process.platform === 'win32') ? { windowsVerbatimArguments: true } : undefined;
-  childD = spawn(say.speaker, commands, options);
+  childD = child_process.spawn(say.speaker, commands, options);
 
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');
@@ -134,7 +134,7 @@ say.export = function(text, voice, speed, filename, callback) {
     });
   }
 
-  childD = spawn(say.speaker, commands);
+  childD = child_process.spawn(say.speaker, commands);
 
   childD.stdin.setEncoding('ascii');
   childD.stderr.setEncoding('ascii');
@@ -180,9 +180,12 @@ exports.stop = function(callback) {
     // childD.pid + 1 sh process. Kill it and nothing happens. There's also a childD.pid + 2
     // aplay process. Kill that and the audio actually stops.
     process.kill(childD.pid + 2);
+  } else if (process.platform === 'win32') {
+    childD.stdin.pause();
+    child_process.exec('taskkill /pid ' + childD.pid + ' /T /F')
   } else {
     childD.stdin.pause();
-    childD.kill('SIGINT');
+    childD.kill();
   }
 
   childD = null;

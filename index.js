@@ -13,7 +13,7 @@ if (process.platform === 'darwin') {
   say.speaker = 'festival';
   say.base_speed = 100;
 } else if (process.platform === 'win32') {
-  say.speaker = 'cmd';
+  say.speaker = 'powershell';
 }
 
 /**
@@ -60,7 +60,8 @@ say.speak = function(text, voice, speed, callback) {
 
     pipedData += '(SayText \"' + text + '\")';
   } else if (process.platform === 'win32') {
-    commands = [ '/s /c "' + path.join(__dirname, 'say.vbs') + ' ' + JSON.stringify(text) + '"' ];
+    pipedData = text;
+    commands = [ 'Add-Type -AssemblyName System.speech; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Speak([Console]::In.ReadToEnd())' ];
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {
@@ -68,7 +69,7 @@ say.speak = function(text, voice, speed, callback) {
     });
   }
 
-  var options = (process.platform === 'win32') ? { windowsVerbatimArguments: true } : undefined;
+  var options = (process.platform === 'win32') ? { shell: true } : undefined;
   childD = child_process.spawn(say.speaker, commands, options);
 
   childD.stdin.setEncoding('ascii');

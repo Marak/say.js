@@ -61,7 +61,16 @@ say.speak = function(text, voice, speed, callback) {
     pipedData += '(SayText \"' + text + '\")';
   } else if (process.platform === 'win32') {
     pipedData = text;
-    commands = [ 'Add-Type -AssemblyName System.speech –NoProfile –ExecutionPolicy Restricted; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Speak([Console]::In.ReadToEnd())' ];
+
+    commands = ['–NoProfile –ExecutionPolicy Restricted;', 
+    'Add-Type -AssemblyName System.speech;', 
+    '$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;'];
+    try {        
+        var rate = parseInt(speed);
+        commands.push('$speak.rate = ' + (between(rate, -10, 10) ? 0 : rate).toString() + ';');
+        // it's bad idea to not validate/sanitaze arguments before. I intentionally use parseInt here, which should be up
+    } catch (e){}
+    commands.push('$speak.Speak([Console]::In.ReadToEnd());');
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {
@@ -196,4 +205,7 @@ exports.stop = function(callback) {
 
 function convertSpeed(speed) {
   return Math.ceil(say.base_speed * speed);
+}
+function between(x, min, max) {
+  return x >= min && x <= max;
 }

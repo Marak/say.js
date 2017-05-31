@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var child_process = require('child_process');
 var path = require('path');
@@ -61,7 +61,17 @@ say.speak = function(text, voice, speed, callback) {
     pipedData += '(SayText \"' + text + '\")';
   } else if (process.platform === 'win32') {
     pipedData = text;
-    commands = [ 'Add-Type -AssemblyName System.speech; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Speak([Console]::In.ReadToEnd())' ];
+
+    commands = ['–NoProfile –ExecutionPolicy Restricted;', 
+    'Add-Type -AssemblyName System.speech;', 
+    '$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;'];
+    try {        
+        var rate = parseInt(speed);
+        commands.push('$speak.rate = ' + (fixWin32Rate(rate, -10, 10)).toString() + ';');
+    } catch (e){
+      callback(e)
+    }
+    commands.push('$speak.Speak([Console]::In.ReadToEnd());');
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
     return process.nextTick(function() {
@@ -196,4 +206,12 @@ exports.stop = function(callback) {
 
 function convertSpeed(speed) {
   return Math.ceil(say.base_speed * speed);
+}
+
+function fixWin32Rate(x, min, max) {
+  var _x = parseInt(x);
+  if(isNaN(_x)) _x = 0;
+  if(x < min) return min;
+  if(x > max) return max;
+  return x;
 }

@@ -68,7 +68,6 @@ say.speak = function(text, voice, speed, callback) {
     try {        
         var rate = parseInt(speed);
         commands.push('$speak.rate = ' + (fixWin32Rate(rate, -10, 10)).toString() + ';');
-        // it's bad idea to not validate/sanitaze arguments before. I intentionally use parseInt here, which should be up
     } catch (e){
       callback(e)
     }

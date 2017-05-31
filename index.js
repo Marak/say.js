@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var child_process = require('child_process');
 var path = require('path');
@@ -67,9 +67,11 @@ say.speak = function(text, voice, speed, callback) {
     '$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;'];
     try {        
         var rate = parseInt(speed);
-        commands.push('$speak.rate = ' + (between(rate, -10, 10) ? 0 : rate).toString() + ';');
+        commands.push('$speak.rate = ' + (fixWin32Rate(rate, -10, 10)).toString() + ';');
         // it's bad idea to not validate/sanitaze arguments before. I intentionally use parseInt here, which should be up
-    } catch (e){}
+    } catch (e){
+      callback(e)
+    }
     commands.push('$speak.Speak([Console]::In.ReadToEnd());');
   } else {
     // if we don't support the platform, callback with an error (next tick) - don't continue
@@ -206,6 +208,11 @@ exports.stop = function(callback) {
 function convertSpeed(speed) {
   return Math.ceil(say.base_speed * speed);
 }
-function between(x, min, max) {
-  return x >= min && x <= max;
+
+function fixWin32Rate(x, min, max) {
+  var _x = parseInt(x);
+  if(isNaN(_x)) _x = 0;
+  if(x < min) return min;
+  if(x > max) return max;
+  return x;
 }

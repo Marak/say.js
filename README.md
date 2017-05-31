@@ -59,8 +59,8 @@ Bad News, Bahh, Bells, Boing, Bubbles, Cellos, Deranged, Good News, Hysterical, 
 
 ## Windows Notes
 
+Speed parameter: _speed_ ∈ [-10, 10] 
 Voice parameter is not yet available. Uses whatever default system voice is set, ignoring voice parameter.
-Speed parameter is not yet available.
 
 The `export` method is not available.
 

@@ -1,4 +1,4 @@
 {
-	"name": "say",
-	"main": "index.d.ts"
+  "name": "say",
+  "main": "index.d.ts"
 }

@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 
-'use strict';
-
-var say = require('../');
+const say = require('../')
 
 // no callback, fire and forget
-say.export('whats up, dog?', 'Alex', 0.5, './exported.wav', function (error){
+say.export('whats up, dog?', 'Alex', 0.5, './exported.wav', (error) => {
   if (error) {
-    return console.log(error);
+    return console.log(error)
   }
 
-  console.log('export complete');
-});
+  console.log('export complete')
+})

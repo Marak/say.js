@@ -8,6 +8,7 @@
     "type": "git",
     "url": "http://github.com/Marak/say.js.git"
   },
+  "typings": "index.d.ts",
   "engines": {
     "node": ">=0.10.0"
   }

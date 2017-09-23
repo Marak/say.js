@@ -11,69 +11,105 @@ npm install say
 ## Usage
 
 ```javascript
-var say = require('say');
+const say = require('say')
 
 // Use default system voice and speed
-say.speak('Hello!');
+say.speak('Hello!')
 
 // Stop the text currently being spoken
-say.stop();
+say.stop()
 
 // More complex example (with an OS X voice) and slow speed
-say.speak('whats up, dog?', 'Alex', 0.5);
+say.speak("What's up, dog?", 'Alex', 0.5)
 
 // Fire a callback once the text has completed being spoken
-say.speak('whats up, dog?', 'Good News', 1.0, function(err) {
+say.speak("What's up, dog?", 'Good News', 1.0, (err) => {
   if (err) {
-    return console.error(err);
+    return console.error(err)
   }
 
-  console.log('Text has been spoken.');
+  console.log('Text has been spoken.')
 });
 
 // Export spoken audio to a WAV file
-say.export("I'm sorry, Dave.", 'Cellos', 0.75, 'hal.wav', function(err) {
+say.export("I'm sorry, Dave.", 'Cellos', 0.75, 'hal.wav', (err) => {
   if (err) {
-    return console.error(err);
+    return console.error(err)
   }
 
-  console.log('Text has been saved to hal.wav.');
-});
+  console.log('Text has been saved to hal.wav.')
+})
 ```
 
+### Methods
 
-## OS X Notes
+#### Override Platform:
 
-### Feminine Voices
+```javascript
+say.setPlatform(say.platforms.WIN32 || say.platforms.MACOS || say.platforms.LINUX)
+```
 
-Agnes, Kathy, Princess, Vicki, Victoria
+#### Speak:
 
-### Masculine Voices
+* Speed: 1 = 100%, 0.5 = 50%, 2 = 200%, etc
 
-Albert, Alex, Bruce, Fred, Junior, Ralph
+```javascript
+say.speak(text, voice || null, speed || null, callback || null)
+```
 
-### Miscellaneous Voices
+#### Export Audio:
 
-Bad News, Bahh, Bells, Boing, Bubbles, Cellos, Deranged, Good News, Hysterical, Pipe Organ, Trinoids, Whisper, Zarvox
+* MacOS Only
+* Speed: 1 = 100%, 0.5 = 50%, 2 = 200%, etc
+
+```javascript
+say.export(text, voice || null, speed || null, filename, callback || null)
+```
+
+#### Stop Speaking:
+
+```javascript
+say.stop(callback || null)
+```
+
+## Feature Matrix
+
+Unfortunately every feature isn't suppored on every platform. PR's welcome!
+
+Platform | Speak | Export | Stop | Speed | Voice
+---------|-------|--------|------|-------|------
+macOS    | Yes   | Yes    | Yes  | Yes   | Yes
+Linux    | Yes   | No     | Yes  | Yes   | Yes
+Windows  | Yes   | No     | Yes  | No    | No
+
+
+## macOS Notes
+
+Voices in macOS are associated with different localities. To a list of voices and their localities run the following command:
+
+```sh
+say -v "?"
+```
+
+As an example, the default voice is `Alex` and the voice used by Siri is `Samantha`.
 
 
 ## Windows Notes
 
 Voice parameter is not yet available. Uses whatever default system voice is set, ignoring voice parameter.
+
 Speed parameter is not yet available.
 
-The `export` method is not available.
+The `.export()` method is not available.
 
 
 ## Linux Notes
 
-Linux support involves the use of [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses decidedly less friendly names for its voices.  Voices for
-Festival sometimes need to be installed separately - you can check which voices are available by starting up Festival in interactive mode, typing `(voice_`,
-and pressing `TAB`.  Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
+Linux support requires [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses less friendly names for its voices. Voices for Festival sometimes need to be installed separately. You can check which voices are available by running `festival`, typing `(voice_`, and pressing Tab. Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
 
-The `export` method is not yet available.
+The `.export()` method is not available.
 
-Try the following commad to install Festival as well as a default voice:
+Try the following commad to install Festival with a default voice:
 
 ```shell
 sudo apt-get install festival festvox-kallpc16k

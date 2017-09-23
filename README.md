@@ -78,9 +78,9 @@ Unfortunately every feature isn't suppored on every platform. PR's welcome!
 
 Platform | Speak | Export | Stop | Speed | Voice
 ---------|-------|--------|------|-------|------
-macOS    | Yes   | Yes    | Yes  | Yes   | Yes
-Linux    | Yes   | No     | Yes  | Yes   | Yes
-Windows  | Yes   | No     | Yes  | No    | No
+macOS    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: 
+Linux    | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :white_check_mark: | :white_check_mark: 
+Windows  | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :no_entry_sign:    | :no_entry_sign:
 
 
 ## macOS Notes

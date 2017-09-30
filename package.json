@@ -1,7 +1,7 @@
 {
   "name": "say",
   "description": "TTS (Text To Speech) Module for Node.js",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "author": "Marak Squires",
   "license": "MIT",
   "scripts": {

@@ -80,7 +80,7 @@ Platform | Speak | Export | Stop | Speed | Voice
 ---------|-------|--------|------|-------|------
 macOS    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: 
 Linux    | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :white_check_mark: | :white_check_mark: 
-Windows  | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :white_check_mark:    | :no_entry_sign:
+Windows  | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :no_entry_sign:    | :white_check_mark:
 
 
 ## macOS Notes
@@ -96,7 +96,7 @@ As an example, the default voice is `Alex` and the voice used by Siri is `Samant
 
 ## Windows Notes
 
-Voice parameter is not yet available. Uses whatever default system voice is set, ignoring voice parameter.
+Speed parameter is not yet available.
 
 The `.export()` method is not available.
 

@@ -16,10 +16,21 @@ class SayPlatformWin32 extends SayPlatformBase {
     let pipedData = ''
     let options = {}
 
-    speed = this.convertSpeed(speed || 1)
+    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+
+    if (speed) {
+      let adjustedSpeed = this.convertSpeed(speed || 1)
+      psCommand += `$speak.Rate = ${adjustedSpeed};`
+    }
+
+    if (voice) {
+      psCommand += `$speak.SelectVoice('${voice}');`
+    }
+
+    psCommand += `$speak.Speak([Console]::In.ReadToEnd())`
 
     pipedData += text
-    args.push(`Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;$speak.Rate = ${speed};$speak.Speak([Console]::In.ReadToEnd())`)
+    args.push(psCommand)
     options.shell = true
 
     return {command: COMMAND, args, pipedData, options}

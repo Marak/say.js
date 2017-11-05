@@ -18,6 +18,10 @@ class SayPlatformWin32 extends SayPlatformBase {
 
     let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
 
+    if (voice) {
+      psCommand += `$speak.SelectVoice('${voice}');`
+    }
+
     if (speed) {
       let adjustedSpeed = this.convertSpeed(speed || 1)
       psCommand += `$speak.Rate = ${adjustedSpeed};`

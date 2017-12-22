@@ -40,6 +40,10 @@ class SayPlatformLinux extends SayPlatformBase {
     // aplay process. Kill that and the audio actually stops.
     process.kill(this.child.pid + 2)
   }
+
+  getVoices() {
+    throw new Error(`say.export(): does not support platform ${this.platform}`)
+  }
 }
 
 module.exports = SayPlatformLinux

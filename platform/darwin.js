@@ -53,6 +53,10 @@ class SayPlatformDarwin extends SayPlatformBase {
     this.child.stdin.pause()
     this.child.kill()
   }
+
+  getVoices() {
+    throw new Error(`say.export(): does not support platform ${this.platform}`)
+  }
 }
 
 module.exports = SayPlatformDarwin

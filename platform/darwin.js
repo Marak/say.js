@@ -54,7 +54,7 @@ class SayPlatformDarwin extends SayPlatformBase {
     this.child.kill()
   }
 
-  getVoices() {
+  getVoices () {
     throw new Error(`say.export(): does not support platform ${this.platform}`)
   }
 }

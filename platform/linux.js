@@ -41,7 +41,7 @@ class SayPlatformLinux extends SayPlatformBase {
     process.kill(this.child.pid + 2)
   }
 
-  getVoices() {
+  getVoices () {
     throw new Error(`say.export(): does not support platform ${this.platform}`)
   }
 }

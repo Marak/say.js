@@ -158,7 +158,7 @@ class SayPlatformBase {
     callback = once(callback)
 
     let {command, args} = this.getVoices()
-    var voices = [];
+    var voices = []
     this.child = childProcess.spawn(command, args)
 
     this.child.stdin.setEncoding('ascii')
@@ -168,22 +168,21 @@ class SayPlatformBase {
       // we can't stop execution from this function
       callback(new Error(data))
     })
-    this.child.stdout.on("data",function(data){
-          voices += data;
-    });
-    
+    this.child.stdout.on('data', function (data) {
+      voices += data
+    })
+
     this.child.addListener('exit', (code, signal) => {
       if (code === null || signal !== null) {
         return callback(new Error(`say.getInstalledVoices(): could not get installed voices, had an error [code: ${code}] [signal: ${signal}]`))
       }
       if (voices.length > 0) {
-        voices = voices.split('\r\n');
-        voices = (voices[voices.length - 1] == '') ? voices.slice(0,voices.length - 1) : voices;
+        voices = voices.split('\r\n')
+        voices = (voices[voices.length - 1] === '') ? voices.slice(0, voices.length - 1) : voices
       }
       this.child = null
 
-      callback(null,voices)
-
+      callback(null, voices)
     })
 
     this.child.stdin.end()

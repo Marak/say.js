@@ -27,7 +27,7 @@ class SayPlatformDarwin extends SayPlatformBase {
     return {command: COMMAND, args, pipedData, options}
   }
 
-  buildExportCommand ({text, voice, speed, filename}) {
+  buildExportCommand ({text, voice, speed, filename, dataFormatInfo}) {
     let args = []
     let pipedData = ''
     let options = {}
@@ -43,7 +43,7 @@ class SayPlatformDarwin extends SayPlatformBase {
     }
 
     if (filename) {
-      args.push('-o', filename, '--data-format=LEF32@32000')
+      args.push('-o', filename, `--data-format=${dataFormatInfo.endian}${dataFormatInfo.dataType}${dataFormatInfo.sampleSize}@${dataFormatInfo.sampleRate}`)
     }
 
     return {command: COMMAND, args, pipedData, options}

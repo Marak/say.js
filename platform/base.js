@@ -84,7 +84,7 @@ class SayPlatformBase {
     }
 
     try {
-      var {command, args, pipedData, options} = this.buildExportCommand({text, voice, speed})
+      var {command, args, pipedData, options} = this.buildExportCommand({text, voice, speed, filename})
     } catch (error) {
       return setImmediate(() => {
         callback(error)

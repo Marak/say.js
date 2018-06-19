@@ -49,6 +49,13 @@ class SayPlatformWin32 extends SayPlatformBase {
     // Overriden to map playback speed (as a ratio) to Window's values (-10 to 10, zero meaning x1.0)
     return Math.max(-10, Math.min(Math.round((9.0686 * Math.log(speed)) - 0.1806), 10))
   }
+
+  getVoices () {
+    let args = []
+    let psCommand = 'Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;$speak.GetInstalledVoices() | % {$_.VoiceInfo.Name}'
+    args.push(psCommand)
+    return {command: COMMAND, args}
+  }
 }
 
 module.exports = SayPlatformWin32

@@ -123,3 +123,4 @@ sudo apt-get install festival festvox-kallpc16k
 * Mac OS X (comes with `say`)
 * Linux with Festival installed
 * Windows (comes with SAPI.SpVoice)
+  * Needs to have Powershell installed and available in $PATH (see issue #75)

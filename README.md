@@ -74,7 +74,7 @@ say.stop(callback || null)
 
 ## Feature Matrix
 
-Unfortunately every feature isn't suppored on every platform. PR's welcome!
+Unfortunately every feature isn't supported on every platform. PR's welcome!
 
 Platform | Speak | Export | Stop | Speed | Voice
 ---------|-------|--------|------|-------|------

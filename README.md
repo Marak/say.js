@@ -73,9 +73,15 @@ say.export(text, voice || null, speed || null, filename, callback || null, dataF
 say.stop(callback || null)
 ```
 
+#### Get List of Installed Voice(s):
+
+```javascript
+say.getInstalledVoices(callback)
+```
+
 ## Feature Matrix
 
-Unfortunately every feature isn't suppored on every platform. PR's welcome!
+Unfortunately every feature isn't supported on every platform. PR's welcome!
 
 Platform | Speak | Export | Stop | Speed | Voice
 ---------|-------|--------|------|-------|------

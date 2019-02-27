@@ -112,7 +112,7 @@ Linux support requires [Festival](http://www.cstr.ed.ac.uk/projects/festival/), 
 
 The `.export()` method is not available.
 
-Try the following commad to install Festival with a default voice:
+Try the following command to install Festival with a default voice:
 
 ```shell
 sudo apt-get install festival festvox-kallpc16k

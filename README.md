@@ -13,6 +13,7 @@ npm install say
 
 ```javascript
 const say = require('say')
+// const say = require('say').Say('darwin' || 'win32' || 'linux')
 
 // Use default system voice and speed
 say.speak('Hello!')
@@ -43,12 +44,6 @@ say.export("I'm sorry, Dave.", 'Cellos', 0.75, 'hal.wav', (err) => {
 ```
 
 ### Methods
-
-#### Override Platform:
-
-```javascript
-say.setPlatform(say.platforms.WIN32 || say.platforms.MACOS || say.platforms.LINUX)
-```
 
 #### Speak:
 

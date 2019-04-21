@@ -107,7 +107,7 @@ The `.export()` method is not available.
 
 ## Linux Notes
 
-Linux support requires [Festival](http://www.cstr.ed.ac.uk/projects/festival/), which uses less friendly names for its voices. Voices for Festival sometimes need to be installed separately. You can check which voices are available by running `festival`, typing `(voice_`, and pressing Tab. Then take the name of the voice you'd like to try, minus the parentheses, and pass it in to say.js.
+Linux support requires [Festival](http://www.cstr.ed.ac.uk/projects/festival/). As far as I can tell there is no sane way to get a list of available voices. The only voice that seems to work is `voice_kal_diphone`, which seems to be the default anyway.
 
 The `.export()` method is not available.
 

@@ -59,8 +59,7 @@ class SayPlatformWin32 extends SayPlatformBase {
     
     if (!filename) throw new Error('Filename must be provided in export();')
     else {
-      const file = __dirname + `\\${filename}.wav`
-      psCommand += `$speak.SetOutputToWaveFile("${file}");`
+      psCommand += `$speak.SetOutputToWaveFile('${filename}');`
     }
 
     psCommand += `$speak.Speak([Console]::In.ReadToEnd());$speak.Dispose()`

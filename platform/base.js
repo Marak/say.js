@@ -93,9 +93,9 @@ class SayPlatformBase {
       })
     }
 
+    this.stop()
     this.child = childProcess.spawn(command, args, options)
 
-    this.stop()
     this.child.stdin.setEncoding('ascii')
     this.child.stderr.setEncoding('ascii')
 

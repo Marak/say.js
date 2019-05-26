@@ -37,7 +37,34 @@ class SayPlatformWin32 extends SayPlatformBase {
   }
 
   buildExportCommand ({text, voice, speed, filename}) {
-    throw new Error(`say.export(): does not support platform ${this.platform}`)
+    let args = []
+    let pipedData = ''
+    let options = {}
+
+    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+
+    if (voice) {
+      psCommand += `$speak.SelectVoice('${voice}');`
+    }
+
+    if (speed) {
+      let adjustedSpeed = this.convertSpeed(speed || 1)
+      psCommand += `$speak.Rate = ${adjustedSpeed};`
+    }
+    
+    if (!filename) throw new Error('Filename must be provided in export();')
+    else {
+      const file = __dirname + `\\${filename}.wav`
+      psCommand += `$speak.SetOutputToWaveFile("${file}");`
+    }
+
+    psCommand += `$speak.Speak([Console]::In.ReadToEnd());$speak.Dispose()`
+
+    pipedData += text
+    args.push(psCommand)
+    options.shell = true
+
+    return {command: COMMAND, args, pipedData, options}
   }
 
   runStopCommand () {

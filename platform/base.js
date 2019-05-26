@@ -32,8 +32,6 @@ class SayPlatformBase {
 
     this.child = childProcess.spawn(command, args, options)
 
-    if (emitter) emitter.emit('speaker', this.child.pid)
-
     this.child.stdin.setEncoding('ascii')
     this.child.stderr.setEncoding('ascii')
 

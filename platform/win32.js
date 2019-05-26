@@ -11,7 +11,7 @@ class SayPlatformWin32 extends SayPlatformBase {
     this.baseSpeed = BASE_SPEED
   }
 
-  buildSpeakCommand ({text, voice, speed }) {
+  buildSpeakCommand ({text, voice, speed}) {
     let args = []
     let pipedData = ''
     let options = {}
@@ -51,7 +51,7 @@ class SayPlatformWin32 extends SayPlatformBase {
       let adjustedSpeed = this.convertSpeed(speed || 1)
       psCommand += `$speak.Rate = ${adjustedSpeed};`
     }
-    
+
     if (!filename) throw new Error('Filename must be provided in export();')
     else {
       psCommand += `$speak.SetOutputToWaveFile('${filename}');`

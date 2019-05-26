@@ -15,7 +15,7 @@ class SayPlatformBase {
    * @param {number|null} speed Speed of text (e.g. 1.0 for normal, 0.5 half, 2.0 double)
    * @param {Function|null} callback A callback of type function(err) to return.
    */
-  speak (text, voice, speed, volume, callback, emitter) {
+  speak (text, voice, speed, callback) {
     if (typeof callback !== 'function') {
       callback = () => {}
     }
@@ -28,7 +28,7 @@ class SayPlatformBase {
       })
     }
 
-    let {command, args, pipedData, options} = this.buildSpeakCommand({text, voice, speed, volume})
+    let {command, args, pipedData, options} = this.buildSpeakCommand({text, voice, speed})
 
     this.child = childProcess.spawn(command, args, options)
 
@@ -51,9 +51,9 @@ class SayPlatformBase {
         return callback(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`))
       }
 
-      callback(null, this.child)
-
       this.child = null
+
+      callback(null)
     })
   }
 
@@ -93,7 +93,6 @@ class SayPlatformBase {
       })
     }
 
-    this.stop()
     this.child = childProcess.spawn(command, args, options)
 
     this.child.stdin.setEncoding('ascii')

@@ -59,7 +59,7 @@ say.speak(text, voice || null, speed || null, callback || null)
 
 #### Export Audio:
 
-* MacOS Only
+* MacOS / Windows Only
 * Speed: 1 = 100%, 0.5 = 50%, 2 = 200%, etc
 
 ```javascript
@@ -86,7 +86,7 @@ Platform | Speak | Export | Stop | Speed | Voice | List
 ---------|-------|--------|------|-------|-------|-----
 macOS    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :no_entry_sign:
 Linux    | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :no_entry_sign:
-Windows  | :white_check_mark: | :no_entry_sign:    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+Windows  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
 
 
 ## macOS Notes
@@ -102,8 +102,7 @@ As an example, the default voice is `Alex` and the voice used by Siri is `Samant
 
 ## Windows Notes
 
-The `.export()` method is not available.
-
+None.
 
 ## Linux Notes
 

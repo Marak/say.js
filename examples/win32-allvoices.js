@@ -9,8 +9,8 @@
 const say = require('../')
 
 let voices = [
-    { voice: 'Microsoft David Desktop', text: 'No people recognize me by my voice.' },
-    { voice: 'Microsoft Zira Desktop', text: 'No people recognize me by my voice.' }
+  { voice: 'Microsoft David Desktop', text: 'No people recognize me by my voice.' },
+  { voice: 'Microsoft Zira Desktop', text: 'No people recognize me by my voice.' }
 ]
 
 sayIt(0)

@@ -9,7 +9,7 @@ class SayPlatformLinux extends SayPlatformBase {
     this.baseSpeed = BASE_SPEED
   }
 
-  buildSpeakCommand ({text, voice, speed}) {
+  buildSpeakCommand ({ text, voice, speed }) {
     let args = []
     let pipedData = ''
     let options = {}
@@ -26,10 +26,10 @@ class SayPlatformLinux extends SayPlatformBase {
 
     pipedData += `(SayText "${text}")`
 
-    return {command: COMMAND, args, pipedData, options}
+    return { command: COMMAND, args, pipedData, options }
   }
 
-  buildExportCommand ({text, voice, speed, filename}) {
+  buildExportCommand ({ text, voice, speed, filename }) {
     throw new Error(`say.export(): does not support platform ${this.platform}`)
   }
 

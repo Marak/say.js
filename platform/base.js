@@ -28,7 +28,7 @@ class SayPlatformBase {
       })
     }
 
-    let {command, args, pipedData, options} = this.buildSpeakCommand({text, voice, speed})
+    let { command, args, pipedData, options } = this.buildSpeakCommand({ text, voice, speed })
 
     this.child = childProcess.spawn(command, args, options)
 
@@ -84,7 +84,7 @@ class SayPlatformBase {
     }
 
     try {
-      var {command, args, pipedData, options} = this.buildExportCommand({text, voice, speed, filename})
+      var { command, args, pipedData, options } = this.buildExportCommand({ text, voice, speed, filename })
     } catch (error) {
       return setImmediate(() => {
         callback(error)
@@ -147,7 +147,7 @@ class SayPlatformBase {
     return Math.ceil(this.baseSpeed * speed)
   }
 
-   /**
+  /**
    * Get Installed voices on system
    * @param {Function} callback A callback of type function(err,voices) to return.
    */
@@ -157,7 +157,7 @@ class SayPlatformBase {
     }
     callback = once(callback)
 
-    let {command, args} = this.getVoices()
+    let { command, args } = this.getVoices()
     var voices = []
     this.child = childProcess.spawn(command, args)
 

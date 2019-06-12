@@ -9,7 +9,7 @@ class SayPlatformDarwin extends SayPlatformBase {
     this.baseSpeed = BASE_SPEED
   }
 
-  buildSpeakCommand ({text, voice, speed}) {
+  buildSpeakCommand ({ text, voice, speed }) {
     let args = []
     let pipedData = ''
     let options = {}
@@ -24,10 +24,10 @@ class SayPlatformDarwin extends SayPlatformBase {
       args.push('-r', this.convertSpeed(speed))
     }
 
-    return {command: COMMAND, args, pipedData, options}
+    return { command: COMMAND, args, pipedData, options }
   }
 
-  buildExportCommand ({text, voice, speed, filename}) {
+  buildExportCommand ({ text, voice, speed, filename }) {
     let args = []
     let pipedData = ''
     let options = {}
@@ -46,7 +46,7 @@ class SayPlatformDarwin extends SayPlatformBase {
       args.push('-o', filename, '--data-format=LEF32@32000')
     }
 
-    return {command: COMMAND, args, pipedData, options}
+    return { command: COMMAND, args, pipedData, options }
   }
 
   runStopCommand () {

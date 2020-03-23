@@ -27,9 +27,8 @@ class SayPlatformWin32 extends SayPlatformBase {
       psCommand += `$speak.Rate = ${adjustedSpeed};`
     }
 
-    psCommand += `$speak.Speak([Console]::In.ReadToEnd())`
-
-    pipedData += text
+    psCommand += `$speak.Speak('${text}')`
+    
     args.push(psCommand)
     options.shell = true
 

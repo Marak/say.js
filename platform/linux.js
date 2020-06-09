@@ -30,7 +30,18 @@ class SayPlatformLinux extends SayPlatformBase {
   }
 
   buildExportCommand ({ text, voice, speed, filename }) {
-    throw new Error(`say.export(): does not support platform ${this.platform}`)
+    let args = []
+    let pipedData = undefined
+    let options = {}
+
+    let linuxShellCommand = 'sh'
+    args.push('-c')
+
+    let fullcmd = `echo "${text}" | text2wave -o ${filename}`
+    args.push(fullcmd)
+
+    // voice and speed not working, could probably get speed working with an -eval argument
+    return { command: linuxShellCommand, args, pipedData, options }
   }
 
   runStopCommand () {

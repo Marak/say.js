@@ -15,44 +15,51 @@ class SayPlatformBase {
    * @param {number|null} speed Speed of text (e.g. 1.0 for normal, 0.5 half, 2.0 double)
    * @param {Function|null} callback A callback of type function(err) to return.
    */
-  speak (text, voice, speed, callback) {
-    if (typeof callback !== 'function') {
-      callback = () => {}
-    }
+  async speak(text, voice, speed, callback) {
 
-    callback = once(callback)
-
-    if (!text) {
-      return setImmediate(() => {
-        callback(new TypeError('say.speak(): must provide text parameter'))
-      })
-    }
-
-    let { command, args, pipedData, options } = this.buildSpeakCommand({ text, voice, speed })
-
-    this.child = childProcess.spawn(command, args, options)
-
-    this.child.stdin.setEncoding('ascii')
-    this.child.stderr.setEncoding('ascii')
-
-    if (pipedData) {
-      this.child.stdin.end(pipedData)
-    }
-
-    this.child.stderr.once('data', (data) => {
-      // we can't stop execution from this function
-      callback(new Error(data))
-    })
-
-    this.child.addListener('exit', (code, signal) => {
-      if (code === null || signal !== null) {
-        return callback(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`))
+    return new Promise((resolve, reject) => {
+      if (typeof callback !== 'function') {
+        callback = () => { }
       }
 
-      this.child = null
+      callback = once(callback)
 
-      callback(null)
-    })
+      if (!text) {
+        return setImmediate(() => {
+          callback(new TypeError('say.speak(): must provide text parameter'));
+          reject(new TypeError('say.speak(): must provide text parameter'));
+        });
+      }
+
+      let { command, args, pipedData, options } = this.buildSpeakCommand({ text, voice, speed })
+
+      this.child = childProcess.spawn(command, args, options)
+
+      this.child.stdin.setEncoding('ascii')
+      this.child.stderr.setEncoding('ascii')
+
+      if (pipedData) {
+        this.child.stdin.end(pipedData)
+      }
+
+      this.child.stderr.once('data', (data) => {
+        // we can't stop execution from this function
+        callback(new Error(data))
+        return reject(new Error(data));
+      })
+
+      this.child.addListener('exit', (code, signal) => {
+        if (code === null || signal !== null) {
+          callback(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`));
+          return reject(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`));
+        }
+
+        this.child = null
+
+        callback(null);
+        return resolve(null);
+      })
+    });
   }
 
   /**

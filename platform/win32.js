@@ -29,7 +29,7 @@ class SayPlatformWin32 extends SayPlatformBase {
 
     psCommand += `$speak.Speak([Console]::In.ReadToEnd())`
 
-    pipedData += text
+    pipedData = text
     args.push(psCommand)
     options.shell = true
 
@@ -59,7 +59,7 @@ class SayPlatformWin32 extends SayPlatformBase {
 
     psCommand += `$speak.Speak([Console]::In.ReadToEnd());$speak.Dispose()`
 
-    pipedData += text
+    pipedData = text
     args.push(psCommand)
     options.shell = true
 

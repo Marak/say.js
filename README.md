@@ -17,7 +17,7 @@ const say = require('say')
 
 // or, override the platform
 const Say = require('say').Say
-const say = new Say('darwin' || 'win32' || 'linux')
+const say = new Say('darwin' || 'win32' || 'linux' || 'espeak')
 
 // Use default system voice and speed
 say.speak('Hello!')

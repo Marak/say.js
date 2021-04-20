@@ -1,10 +1,12 @@
 const SayLinux = require('./platform/linux.js')
 const SayMacos = require('./platform/darwin.js')
 const SayWin32 = require('./platform/win32.js')
+const SayEspeak = require('./platform/espeak.js')
 
 const MACOS = 'darwin'
 const LINUX = 'linux'
 const WIN32 = 'win32'
+const ESPEAK = 'espeak'
 
 class Say {
   constructor (platform) {
@@ -18,6 +20,8 @@ class Say {
       return new SayLinux()
     } else if (platform === WIN32) {
       return new SayWin32()
+    } else if (platform === ESPEAK) {
+      return new SayEspeak()
     }
 
     throw new Error(`new Say(): unsupported platorm! ${platform}`)

@@ -5,6 +5,7 @@ class SayPlatformBase {
   constructor () {
     this.child = null
     this.baseSpeed = 0
+    this.voicesSep = '\r\n'
   }
 
   /**
@@ -147,6 +148,10 @@ class SayPlatformBase {
     return Math.ceil(this.baseSpeed * speed)
   }
 
+  filterVoices(voices){
+    return voices
+  }
+
   /**
    * Get Installed voices on system
    * @param {Function} callback A callback of type function(err,voices) to return.
@@ -177,12 +182,12 @@ class SayPlatformBase {
         return callback(new Error(`say.getInstalledVoices(): could not get installed voices, had an error [code: ${code}] [signal: ${signal}]`))
       }
       if (voices.length > 0) {
-        voices = voices.split('\r\n')
+        voices = voices.split(this.voicesSep)
         voices = (voices[voices.length - 1] === '') ? voices.slice(0, voices.length - 1) : voices
       }
       this.child = null
 
-      callback(null, voices)
+      callback(null, this.filterVoices(voices))
     })
 
     this.child.stdin.end()

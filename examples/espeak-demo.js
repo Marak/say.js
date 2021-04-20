@@ -1,16 +1,17 @@
+#!/usr/bin/env node
 const Say = require('..').Say
 const say = new Say('espeak')
 
 let voices = [
-  { voice: 'english', text: 'Good  morning', speed: 1 },
-  { voice: 'norwegian', text: 'God morgen', speed: 1 },
-  { voice: 'english', text: 'Good  morning', speed: 2 },
-  { voice: 'norwegian', text: 'God morgen', speed: 0.5 }
+  { voice: 'en-us', text: 'Good  morning', speed: 1 },
+  { voice: 'nb', text: 'God morgen', speed: 1 },
+  { voice: 'en-us', text: 'Good  morning', speed: 2 },
+  { voice: 'nb', text: 'God morgen', speed: 0.5 }
 ]
 
 sayIt(0)
 
-say.export('whats up, dog?', 'default', 0.5, './exported.wav', (error) => {
+say.export('whats up, dog?', 'en-us', 0.5, './exported.wav', (error) => {
   if (error) {
     return console.log(error)
   }

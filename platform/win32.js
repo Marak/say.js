@@ -16,7 +16,8 @@ class SayPlatformWin32 extends SayPlatformBase {
     let pipedData = ''
     let options = {}
 
-    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+    let psCommand = `chcp 65001;` // Change powershell encoding to utf-8
+    psCommand += `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
 
     if (voice) {
       psCommand += `$speak.SelectVoice('${voice}');`
@@ -41,7 +42,8 @@ class SayPlatformWin32 extends SayPlatformBase {
     let pipedData = ''
     let options = {}
 
-    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+    let psCommand = `chcp 65001;` // Change powershell encoding to utf-8
+    psCommand += `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
 
     if (voice) {
       psCommand += `$speak.SelectVoice('${voice}');`

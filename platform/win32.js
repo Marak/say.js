@@ -16,10 +16,11 @@ class SayPlatformWin32 extends SayPlatformBase {
     let pipedData = ''
     let options = {}
 
-    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+    let psCommand = `chcp 65001;` // Change powershell encoding to utf-8
+    psCommand += `$speak = New-Object -ComObject SAPI.SpVoice;`
 
     if (voice) {
-      psCommand += `$speak.SelectVoice('${voice}');`
+      psCommand += `$speak.Voice = $speak.GetVoices('Name="${voice}"').item(0);`;
     }
 
     if (speed) {
@@ -41,10 +42,11 @@ class SayPlatformWin32 extends SayPlatformBase {
     let pipedData = ''
     let options = {}
 
-    let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
+    let psCommand = `chcp 65001;` // Change powershell encoding to utf-8
+    psCommand += `$speak = New-Object -ComObject SAPI.SpVoice;`
 
     if (voice) {
-      psCommand += `$speak.SelectVoice('${voice}');`
+      psCommand += `$speak.Voice = $speak.GetVoices('Name="${voice}"').item(0);`
     }
 
     if (speed) {
@@ -54,10 +56,10 @@ class SayPlatformWin32 extends SayPlatformBase {
 
     if (!filename) throw new Error('Filename must be provided in export();')
     else {
-      psCommand += `$speak.SetOutputToWaveFile('${filename}');`
+      psCommand += `$vs = New-Object -ComObject SAPI.SpFileStream;$vs.Open('"${filename}"',3);$speak.AudioOutputStream = $vs;`
     }
 
-    psCommand += `$speak.Speak([Console]::In.ReadToEnd());$speak.Dispose()`
+    psCommand += `$speak.Speak([Console]::In.ReadToEnd());$vs.Close();`
 
     pipedData += text
     args.push(psCommand)
@@ -78,7 +80,7 @@ class SayPlatformWin32 extends SayPlatformBase {
 
   getVoices () {
     let args = []
-    let psCommand = 'Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;$speak.GetInstalledVoices() | % {$_.VoiceInfo.Name}'
+    let psCommand = '$speak = New-Object -ComObject SAPI.SpVoice;$speak.GetVoices() | ForEach-Object {$_.GetAttribute("Name")}'
     args.push(psCommand)
     return { command: COMMAND, args }
   }

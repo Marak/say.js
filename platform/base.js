@@ -33,7 +33,7 @@ class SayPlatformBase {
     this.child = childProcess.spawn(command, args, options)
 
     this.child.stdin.setEncoding('ascii')
-    this.child.stderr.setEncoding('ascii')
+    this.child.stderr.setEncoding('utf-8')
 
     if (pipedData) {
       this.child.stdin.end(pipedData)
@@ -93,8 +93,8 @@ class SayPlatformBase {
 
     this.child = childProcess.spawn(command, args, options)
 
-    this.child.stdin.setEncoding('ascii')
-    this.child.stderr.setEncoding('ascii')
+    this.child.stdin.setEncoding('utf-8')
+    this.child.stderr.setEncoding('utf-8')
 
     if (pipedData) {
       this.child.stdin.end(pipedData)
@@ -161,8 +161,8 @@ class SayPlatformBase {
     var voices = []
     this.child = childProcess.spawn(command, args)
 
-    this.child.stdin.setEncoding('ascii')
-    this.child.stderr.setEncoding('ascii')
+    this.child.stdin.setEncoding('utf-8')
+    this.child.stderr.setEncoding('utf-8')
 
     this.child.stderr.once('data', (data) => {
       // we can't stop execution from this function

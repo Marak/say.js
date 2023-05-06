@@ -20,7 +20,7 @@ class Say {
       return new SayWin32()
     }
 
-    throw new Error(`new Say(): unsupported platorm! ${platform}`)
+    throw new Error(`new Say(): unsupported platform: ${platform}`)
   }
 }
 

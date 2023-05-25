@@ -15,43 +15,47 @@ class SayPlatformBase {
    * @param {number|null} speed Speed of text (e.g. 1.0 for normal, 0.5 half, 2.0 double)
    * @param {Function|null} callback A callback of type function(err) to return.
    */
-  speak (text, voice, speed, callback) {
-    if (typeof callback !== 'function') {
-      callback = () => {}
-    }
-
-    callback = once(callback)
-
-    if (!text) {
-      return setImmediate(() => {
-        callback(new TypeError('say.speak(): must provide text parameter'))
-      })
-    }
-
-    let { command, args, pipedData, options } = this.buildSpeakCommand({ text, voice, speed })
-
-    this.child = childProcess.spawn(command, args, options)
-
-    this.child.stdin.setEncoding('ascii')
-    this.child.stderr.setEncoding('ascii')
-
-    if (pipedData) {
-      this.child.stdin.end(pipedData)
-    }
-
-    this.child.stderr.once('data', (data) => {
-      // we can't stop execution from this function
-      callback(new Error(data))
-    })
-
-    this.child.addListener('exit', (code, signal) => {
-      if (code === null || signal !== null) {
-        return callback(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`))
+  async speak (text, voice, speed, callback) {
+    return new Promise((resolve) => {
+      if (typeof callback !== 'function') {
+        callback = () => {}
       }
-
-      this.child = null
-
-      callback(null)
+  
+      callback = once(callback)
+  
+      if (!text) {
+        return setImmediate(() => {
+          callback(new TypeError('say.speak(): must provide text parameter'))
+        })
+      }
+  
+      let { command, args, pipedData, options } = this.buildSpeakCommand({ text, voice, speed })
+  
+      this.child = childProcess.spawn(command, args, options)
+  
+      this.child.stdin.setEncoding('ascii')
+      this.child.stderr.setEncoding('ascii')
+  
+      if (pipedData) {
+        this.child.stdin.end(pipedData)
+      }
+  
+      this.child.stderr.once('data', (data) => {
+        // we can't stop execution from this function
+        callback(new Error(data))
+      })
+  
+      this.child.addListener('exit', (code, signal) => {
+        if (code === null || signal !== null) {
+          return callback(new Error(`say.speak(): could not talk, had an error [code: ${code}] [signal: ${signal}]`))
+        }
+  
+        this.child = null
+  
+        callback(null)
+  
+        resolve()
+      })
     })
   }
 

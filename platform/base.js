@@ -159,7 +159,7 @@ class SayPlatformBase {
 
     let { command, args } = this.getVoices()
     var voices = []
-    this.child = childProcess.spawn(command, args)
+    this.child = childProcess.spawn(command, args, { shell: true })
 
     this.child.stdin.setEncoding('ascii')
     this.child.stderr.setEncoding('ascii')
@@ -177,7 +177,7 @@ class SayPlatformBase {
         return callback(new Error(`say.getInstalledVoices(): could not get installed voices, had an error [code: ${code}] [signal: ${signal}]`))
       }
       if (voices.length > 0) {
-        voices = voices.split('\r\n')
+        voices = voices.split(/\r?\n/)
         voices = (voices[voices.length - 1] === '') ? voices.slice(0, voices.length - 1) : voices
       }
       this.child = null

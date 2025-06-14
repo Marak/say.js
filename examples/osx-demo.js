@@ -2,6 +2,14 @@
 
 const say = require('../')
 
+say.getInstalledVoices((error, voices) => {
+  if (error) {
+    console.log(error)
+  }
+
+  console.log(voices)
+})
+
 // no callback, fire and forget
 say.speak('whats up, dog?', 'Alex')
 

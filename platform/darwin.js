@@ -55,7 +55,12 @@ class SayPlatformDarwin extends SayPlatformBase {
   }
 
   getVoices () {
-    throw new Error(`say.export(): does not support platform ${this.platform}`)
+    let args = []
+    let pipedData = ''
+    let options = {}
+    args.push('-v', '?')
+    
+    return { command: COMMAND, args, pipedData, options }
   }
 }
 

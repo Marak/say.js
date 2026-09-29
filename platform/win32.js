@@ -4,6 +4,9 @@ const SayPlatformBase = require('./base.js')
 
 const BASE_SPEED = 0 // Unsupported
 const COMMAND = 'powershell'
+// Node writes stdin as UTF-8, but PowerShell decodes [Console]::In with the console code page
+// (e.g. GBK on Chinese Windows, Shift-JIS on Japanese Windows), which garbles non-ASCII text.
+const READ_STDIN_UTF8 = `[Console]::InputEncoding = New-Object System.Text.UTF8Encoding $false;`
 
 class SayPlatformWin32 extends SayPlatformBase {
   constructor () {
@@ -27,6 +30,7 @@ class SayPlatformWin32 extends SayPlatformBase {
       psCommand += `$speak.Rate = ${adjustedSpeed};`
     }
 
+    psCommand += READ_STDIN_UTF8
     psCommand += `$speak.Speak([Console]::In.ReadToEnd())`
 
     pipedData += text
@@ -57,6 +61,7 @@ class SayPlatformWin32 extends SayPlatformBase {
       psCommand += `$speak.SetOutputToWaveFile('${filename}');`
     }
 
+    psCommand += READ_STDIN_UTF8
     psCommand += `$speak.Speak([Console]::In.ReadToEnd());$speak.Dispose()`
 
     pipedData += text
